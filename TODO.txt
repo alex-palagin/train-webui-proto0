@@ -1,0 +1,5 @@
+
+Introduce security/authentication
+Finish Navigation demo with tables only
+Add Swagger (or ??) proto/mock client for getting tags/values
+Extend Navigation demo with charts
