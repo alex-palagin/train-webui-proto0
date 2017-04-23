@@ -5,6 +5,7 @@ import train.ui.domain.Tag;
 import train.ui.domain.TagValue;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by apalagin on 4/9/2017.
@@ -24,7 +25,9 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Collection<Tag> fetchTags(Query q) {
-        return Collections.unmodifiableCollection(TAGS);
+        return Collections.unmodifiableCollection(
+                TAGS.stream().filter(t -> !q.containsTag(t)).collect(Collectors.toList())
+        );
     }
 
     private final Map<String, List<TagValue>> VALUES = new HashMap<>();
@@ -53,6 +56,6 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Collection<TagValue> fetchValues(Query q) {
-        return Collections.emptyList();
+        return Collections.unmodifiableCollection(VALUES.get(q.getLeafTag().getId()));
     }
 }

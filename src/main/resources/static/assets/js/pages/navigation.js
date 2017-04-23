@@ -1,24 +1,29 @@
 $("#nav-content").load("navigation/tags.html");
 
-var caption = "TAGS";
+var currentQuery = "";
 
 function loadTagValues(tagId) {
-    $("#nav-content").load("navigation/values.html?tagId=" + tagId);
-    caption += "&nbsp;&gt;&nbsp;" + tagId;
-    updateCaption(caption);
+    currentQuery += "&" + tagId;
+    $("#nav-content").load("navigation/values.html?q=" + encodeURIComponent(currentQuery));
+    updateCaption(currentQuery);
 }
 
-function loadTags(query) {
-    $("#nav-content").load("navigation/tags.html?q=query");
-    caption += "&nbsp;&gt;&nbsp;" + query;
-    updateCaption(caption);
+function loadTagsForValue(value) {
+    currentQuery += "=" + value;
+    $("#nav-content").load("navigation/tags.html?q=" + encodeURIComponent(currentQuery));
+    updateCaption(currentQuery);
 }
 
-function updateCaption(caption) {
-    caption = addRefs(caption);
+function updateCaption(currentQuery) {
+    var caption = "TAGS";
+    var parts = currentQuery.split("&");
+    parts.forEach(function(str) {
+        caption += "&nbsp;&gt;&nbsp;" + addRefs(str);
+    });
+
     $("#nav-caption").html(caption);
 }
 
-function addRefs(caption) {
-    return caption;
+function addRefs(str) {
+    return str;
 }

@@ -50,18 +50,11 @@ public class NavigationController {
     }
 
     @RequestMapping("/navigation/values.html")
-    public String values(@RequestParam(value="tagId", required=false) String tagId,
-                         @RequestParam(value="q", required=false) String q,
+    public String values(@RequestParam(value="q", required=false) String q,
                          Model model) {
-        model.addAttribute("tagId", tagId);
-        model.addAttribute("q", tagId);
 
-        Collection<TagValue> values;
-        if (q == null) {
-            values = tagService.fetchValues(tagId);
-        } else {
-            values = tagService.fetchValues(q);
-        }
+        Query query = Query.parse(q);
+        Collection<TagValue> values = tagService.fetchValues(query);
 
         model.addAttribute("values", values);
         return "widgets/navigation/values";

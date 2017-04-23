@@ -9,7 +9,7 @@
     <tr th:each="val: ${values}">
         <td th:text="${val.value}">San Francisco</td>
         <td th:text="${val.documentsTagged}">100</td>
-        <td><button th:onclick="'loadTags(\'' + ${tagId} + '=' + ${val.value} + '\');'" type="button" class="btn btn-primary btn-xs">Tags</button></td>
+        <td><button th:onclick="'loadTagsForValue(\'' + ${val.value} + '\');'" type="button" class="btn btn-primary btn-xs">Tags</button></td>
     </tr>
     </tbody>
 </table>
