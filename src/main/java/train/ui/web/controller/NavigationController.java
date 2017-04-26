@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import train.ui.domain.Tag;
 import train.ui.domain.TagValue;
 import train.ui.support.Query;
@@ -33,10 +34,9 @@ public class NavigationController {
         return "navigation";
     }
 
-    @RequestMapping("/navigation/tags.html")
-    public String tags(@RequestParam(value="q", required=false) String q, Model model) {
-        model.addAttribute("query", q);
-
+    @RequestMapping("/navigation/tags.json")
+    @ResponseBody
+    public Collection<Tag> tags(@RequestParam(value="q", required=false) String q) {
         Collection<Tag> tags;
         if (q == null) {
             tags = tagService.fetchTags();
@@ -45,18 +45,14 @@ public class NavigationController {
             tags = tagService.fetchTags(query);
         }
 
-        model.addAttribute("tags", tags);
-        return "widgets/navigation/tags";
+        return tags;
     }
 
-    @RequestMapping("/navigation/values.html")
-    public String values(@RequestParam(value="q", required=false) String q,
-                         Model model) {
-
+    @RequestMapping("/navigation/values.json")
+    @ResponseBody
+    public Collection<TagValue> values(@RequestParam(value="q", required=false) String q) {
         Query query = Query.parse(q);
         Collection<TagValue> values = tagService.fetchValues(query);
-
-        model.addAttribute("values", values);
-        return "widgets/navigation/values";
+        return values;
     }
 }

@@ -22,6 +22,8 @@
     <link href="assets/libs/sortable/sortable-theme-bootstrap.css" rel="stylesheet" />
     <link href="assets/libs/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
     <link href="assets/libs/jquery-icheck/skins/all.css" rel="stylesheet" />
+    <link href="assets/libs/jquery-icheck/skins/all.css" rel="stylesheet" />
+    <link href="assets/libs/jquery-datatables/css/dataTables.bootstrap.css" rel="stylesheet" />
     <!-- Code Highlighter for Demo -->
     <link href="assets/libs/prettify/github.css" rel="stylesheet" />
 
@@ -103,7 +105,27 @@
                         <a href="navigation/tags.html" class="hidden reload"><i class="icon-ccw-1"></i></a>
                     </div>
                 </div>
-                <div id="nav-content" class="widget-content"></div>
+                <div id="nav-content" class="widget-content">
+                    <table id="tags-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                        <th>tag</th>
+                        <th>type</th>
+                        <th>unq</th>
+                        <th>min</th>
+                        <th>max</th>
+                        <th>avg</th>
+                        <th>med</th>
+                        <th></th>
+                        </thead>
+                    </table>
+                    <table id="values-table" class="table table-striped table-bordered" cellspacing="0" width="100%" style="display: none">
+                        <thead>
+                        <th>Value</th>
+                        <th>Documents</th>
+                        <th></th>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
         <!-- ============================================================== -->
@@ -143,6 +165,8 @@
 <script src="assets/libs/pace/pace.min.js"></script>
 <script src="assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script src="assets/libs/jquery-icheck/icheck.min.js"></script>
+<script src="assets/libs/jquery-datatables/js/jquery.dataTables.js"></script>
+<script src="assets/libs/jquery-datatables/js/dataTables.bootstrap.js"></script>
 
 <!-- Demo Specific JS Libraries -->
 <script src="assets/libs/prettify/prettify.js"></script>
