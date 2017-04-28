@@ -1,10 +1,47 @@
 var currentQuery = "";
 
+var tagsTable;
+var valueTable;
+
+$(document).ready(function () {
+    tagsTable = $("#tags-table").DataTable(
+        {
+            "paging": false,
+            "searching": false,
+            "info": false,
+            ajax: {
+                url: "navigation/tags.json",
+                dataSrc: ""
+            },
+            columns: [
+                { data: "id" },
+                { data: "id" },
+                { data: "id" },
+                { data: "id" },
+                { data: "id" },
+                { data: "id" },
+                { data: "id" },
+                { data: "id" }
+            ],
+            columnDefs: [
+                {
+                    render: function (data, type, row) {
+                        return "<button onclick='loadValues(\"" + data + "\")' type='button' class='btn btn-primary btn-xs'>Values</button>";
+                    },
+                    targets: 7
+                }
+            ]
+        }
+    );
+});
+
 function loadValues(tagId) {
     $("#tags-table").hide();
     $("#values-table").show();
 
-    currentQuery += "&" + tagId;
+    if (tagId)
+        currentQuery += "&" + tagId;
+
     if (valueTable) {
         valueTable.ajax.url("navigation/values.json?q=" + encodeURIComponent(currentQuery)).load();
     } else {
@@ -54,18 +91,29 @@ function updateCaption(currentQuery) {
     var subQuery = "";
     for (var i = 0; i < parts.length - 1; i++) {
         if (parts[i] != "") {
-            subQuery += "&" + parts[i];
             caption += "&nbsp;&gt;&nbsp;" + addRefs(parts[i], subQuery);
+            subQuery += "&" + parts[i];
         }
     }
+
     // Last item goes w/o link
-    caption += "&nbsp;&gt;&nbsp;" + parts[parts.length - 1];
+    var lastLink = parts[parts.length - 1].split("=");
+    if (lastLink.length > 1) {
+        caption += "&nbsp;&gt;&nbsp;" + addRefs(lastLink[0], subQuery);
+        caption += "&nbsp;=&nbsp;" + lastLink[1];
+    }  else {
+        caption += "&nbsp;&gt;&nbsp;" + lastLink[0];
+    }
 
     $("#nav-caption").html(caption);
 }
 
-function addRefs(str, query) {
-    return "<a href='#' onclick='goBack(\"" + query + "\")'>" + str + "</a>";
+function addRefs(linkName, query, ignoreValue) {
+    var parts = linkName.split("=");
+    var result = "<a href='#' onclick='goBack(\"" + query + "&" + parts[0] + "\")'>" + parts[0] + "</a>";
+    if (parts.length > 1)
+        result += "<a href='#' onclick='goBack(\"" + query + "&" + linkName + "\")'>&nbsp;=&nbsp;" + parts[1] + "</a>";
+    return result;
 }
 
 function goBack(query) {
@@ -77,38 +125,3 @@ function goBack(query) {
         loadValues();
     }
 }
-
-var tagsTable;
-var valueTable;
-
-$(document).ready(function () {
-    tagsTable = $("#tags-table").DataTable(
-        {
-            "paging": false,
-            "searching": false,
-            "info": false,
-            ajax: {
-                url: "navigation/tags.json",
-                dataSrc: ""
-            },
-            columns: [
-                { data: "id" },
-                { data: "id" },
-                { data: "id" },
-                { data: "id" },
-                { data: "id" },
-                { data: "id" },
-                { data: "id" },
-                { data: "id" }
-            ],
-            columnDefs: [
-                {
-                    render: function (data, type, row) {
-                        return "<button onclick='loadValues(\"" + data + "\")' type='button' class='btn btn-primary btn-xs'>Values</button>";
-                    },
-                    targets: 7
-                }
-            ]
-        }
-    );
-});
