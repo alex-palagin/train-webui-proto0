@@ -22,7 +22,7 @@ public class Query {
             if (p.isEmpty())
                 continue;
             String[] terms = p.split("=");
-            Tag tag = new Tag(terms[0], null, 0);
+            Tag tag = new Tag(terms[0], null);
             TagValue tagValue = new TagValue(tag, terms.length > 1 ? terms[1] : null, 0);
             q.add(tagValue);
         }

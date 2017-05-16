@@ -14,21 +14,20 @@ $(document).ready(function () {
                 dataSrc: ""
             },
             columns: [
-                { data: "id" },
-                { data: "id" },
-                { data: "id" },
-                { data: "id" },
-                { data: "id" },
-                { data: "id" },
-                { data: "id" },
-                { data: "id" }
+                { data: "tag.id" },
+                { data: "stats.uniques" },
+                { data: "stats.minimum" },
+                { data: "stats.maximum" },
+                { data: "stats.average" },
+                { data: "stats.median" },
+                { data: "tag.id" }
             ],
             columnDefs: [
                 {
                     render: function (data, type, row) {
                         return "<button onclick='loadValues(\"" + data + "\")' type='button' class='btn btn-primary btn-xs'>Values</button>";
                     },
-                    targets: 7
+                    targets: 6
                 }
             ]
         }

@@ -2,8 +2,10 @@ package train.ui.support;
 
 import org.springframework.stereotype.Service;
 import train.ui.domain.Tag;
+import train.ui.domain.TagStats;
 import train.ui.domain.TagValue;
 
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -14,9 +16,9 @@ import java.util.stream.Collectors;
 public class TagServiceImpl implements TagService {
 
     private final List<Tag> TAGS = Arrays.asList(
-            new Tag("City", "City", 10),
-            new Tag("Position", "Position", 5),
-            new Tag("Salary", "Salary", 3));
+            new Tag("City", "City"),
+            new Tag("Position", "Position"),
+            new Tag("Salary", "Salary"));
 
     @Override
     public Collection<Tag> fetchTags() {
@@ -50,8 +52,15 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Collection<TagValue> fetchValues(String tagId) {
-        return Collections.unmodifiableCollection(VALUES.get(tagId));
+    public TagStats fetchStats(Tag tag) {
+        Random rnd = new Random(Instant.now().toEpochMilli());
+        TagStats stats = new TagStats(
+                "" + rnd.nextInt(),
+                "" + rnd.nextInt(),
+                "" + rnd.nextInt(),
+                "" + rnd.nextInt(),
+                "" + rnd.nextInt());
+        return stats;
     }
 
     @Override

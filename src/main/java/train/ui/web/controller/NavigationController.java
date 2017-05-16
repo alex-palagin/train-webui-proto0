@@ -10,8 +10,10 @@ import train.ui.domain.Tag;
 import train.ui.domain.TagValue;
 import train.ui.support.Query;
 import train.ui.support.TagService;
+import train.ui.web.model.TagTableRow;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * Created by apalagin on 4/4/2017.
@@ -36,7 +38,7 @@ public class NavigationController {
 
     @RequestMapping("/navigation/tags.json")
     @ResponseBody
-    public Collection<Tag> tags(@RequestParam(value="q", required=false) String q) {
+    public Collection<TagTableRow> tags(@RequestParam(value="q", required=false) String q) {
         Collection<Tag> tags;
         if (q == null) {
             tags = tagService.fetchTags();
@@ -45,7 +47,13 @@ public class NavigationController {
             tags = tagService.fetchTags(query);
         }
 
-        return tags;
+        Collection<TagTableRow> result = new LinkedList<>();
+        for (Tag tag: tags) {
+            TagTableRow row = new TagTableRow(tag, tagService.fetchStats(tag));
+            result.add(row);
+        }
+
+        return result;
     }
 
     @RequestMapping("/navigation/values.json")

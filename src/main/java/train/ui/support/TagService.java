@@ -1,6 +1,7 @@
 package train.ui.support;
 
 import train.ui.domain.Tag;
+import train.ui.domain.TagStats;
 import train.ui.domain.TagValue;
 
 import java.util.Collection;
@@ -12,6 +13,7 @@ public interface TagService {
     Collection<Tag> fetchTags();
     Collection<Tag> fetchTags(Query q);
 
-    Collection<TagValue> fetchValues(String tagId);
+    TagStats fetchStats(Tag tag);
+
     Collection<TagValue> fetchValues(Query q);
 }
